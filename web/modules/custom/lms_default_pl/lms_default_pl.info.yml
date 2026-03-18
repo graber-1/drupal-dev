@@ -1,0 +1,8 @@
+name: LMS Default Polish Content
+type: module
+description: Provides default Polish content (courses, lessons, activities) for the LMS.
+core_version_requirement: ^10.3 || ^11
+package: LMS
+dependencies:
+  - lms:lms
+  - lms:lms_answer_plugins

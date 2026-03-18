@@ -1,0 +1,48 @@
+1:
+  values:
+    label: 'Kurs 1'
+  owner_uuid: '0d3a9d8f-33d9-49ea-b492-1f02933cc99a'
+  uuid: 'cc000001-0000-4000-8000-000000000001'
+  lessons:
+    -
+      target_uuid: 'bb000001-0000-4000-8000-000000000001'
+      required_score: 50
+      mandatory: true
+      auto_repeat_failed: false
+      time_limit: 0
+    -
+      target_uuid: 'bb000002-0000-4000-8000-000000000002'
+      required_score: 50
+      mandatory: true
+      auto_repeat_failed: false
+      time_limit: 0
+2:
+  values:
+    label: 'Kurs 2'
+  owner_uuid: '0d3a9d8f-33d9-49ea-b492-1f02933cc99a'
+  uuid: 'cc000002-0000-4000-8000-000000000002'
+  lessons:
+    -
+      target_uuid: 'bb000002-0000-4000-8000-000000000002'
+      required_score: 50
+      mandatory: true
+      auto_repeat_failed: false
+      time_limit: 0
+    -
+      target_uuid: 'bb000001-0000-4000-8000-000000000001'
+      required_score: 50
+      mandatory: true
+      auto_repeat_failed: false
+      time_limit: 0
+3:
+  values:
+    label: 'Egzamin 3'
+  owner_uuid: '0d3a9d8f-33d9-49ea-b492-1f02933cc99a'
+  uuid: 'cc000003-0000-4000-8000-000000000003'
+  lessons:
+    -
+      target_uuid: 'bb000001-0000-4000-8000-000000000001'
+      required_score: 50
+      mandatory: true
+      auto_repeat_failed: false
+      time_limit: 1
