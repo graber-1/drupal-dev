@@ -27,7 +27,7 @@
         "chi-teck/drupal-coder-extension": "^1.2",
         "drupal/config_inspector": "^2.1",
         "drupal/core-dev": "^11",
-        "drupal/devel": "^5.3",
+        "drupal/devel": "^5.5",
         "drupal/developer_console": "^1.0@dev",
         "ergebnis/phpstan-rules": "^2.0",
         "phpspec/prophecy-phpunit": "^2.0",
