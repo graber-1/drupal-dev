@@ -1,0 +1,104 @@
+{
+    "name": "drupal/recommended-project",
+    "description": "Project template for Drupal 9 projects with a relocated document root",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.drupal.org/project/drupal",
+    "support": {
+        "docs": "https://www.drupal.org/docs/user_guide/en/index.html",
+        "chat": "https://www.drupal.org/node/314178"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    ],
+    "require": {
+        "composer/installers": "^2.2",
+        "cweagans/composer-patches": "^1.7",
+        "drupal/admin_toolbar": "^3.4",
+        "drupal/codemirror_editor": "^2.0",
+        "drupal/core": "^11",
+        "drupal/core-composer-scaffold": "^11",
+        "drush/drush": "^13.7"
+    },
+    "require-dev": {
+        "chi-teck/drupal-coder-extension": "^1.2",
+        "drupal/config_inspector": "^2.1",
+        "drupal/core-dev": "^11",
+        "drupal/devel": "^5.3",
+        "drupal/developer_console": "^1.0@dev",
+        "ergebnis/phpstan-rules": "^2.0",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-strict-rules": "^1.2",
+        "phpunit/phpunit": "^9 || ^10.5 || ^11"
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true,
+            "drupal/core-composer-scaffold": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true,
+            "cweagans/composer-patches": true,
+            "php-http/discovery": true,
+            "tbachert/spi": true
+        }
+    },
+    "scripts": {
+        "si": "drush site:install -v minimal --existing-config --yes --sites-subdir=default",
+        "sid": "drush site:install -v minimal --existing-config --yes --sites-subdir=default && drush lms-ctt --simple-passwords && drush en -y developer_console && drush uli",
+        "test-environment": "drush si minimal --yes && drush thin claro && drush cset system.theme default claro -y && drush pm:install dblog block page_cache dynamic_page_cache lms lms_answer_plugins lms_answer_comments -y && drush lms-ctt --simple-passwords",
+        "phpcs": "phpcs -s --standard='web/modules/contrib/@additional_args/phpcs.xml' web/modules/contrib/@additional_args/",
+        "phpcbf": "phpcbf /var/www/html/web/modules/contrib/@additional_args",
+        "phpstan": "phpstan -vv analyse /var/www/html/web/modules/contrib/@additional_args -c /var/www/html/web/modules/contrib/@additional_args/phpstan.neon",
+        "phpstan-baseline": "rm /var/www/html/web/modules/contrib/@additional_args/phpstan-baseline.neon; touch /var/www/html/web/modules/contrib/@additional_args/phpstan-baseline.neon; phpstan analyse /var/www/html/web/modules/contrib/@additional_args -c /var/www/html/web/modules/contrib/@additional_args/phpstan.neon --generate-baseline /var/www/html/web/modules/contrib/@additional_args/phpstan-baseline.neon"
+    },
+    "extra": {
+        "drupal-scaffold": {
+            "locations": {
+                "web-root": "web/"
+            }
+        },
+        "installer-paths": {
+            "web/core": [
+                "type:drupal-core"
+            ],
+            "web/libraries/{$name}": [
+                "type:drupal-library"
+            ],
+            "web/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "web/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "web/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "drush/Commands/contrib/{$name}": [
+                "type:drupal-drush"
+            ],
+            "web/modules/custom/{$name}": [
+                "type:drupal-custom-module"
+            ],
+            "web/profiles/custom/{$name}": [
+                "type:drupal-custom-profile"
+            ],
+            "web/themes/custom/{$name}": [
+                "type:drupal-custom-theme"
+            ]
+        },
+        "patches-file": "composer.patches.json",
+        "patchLevel": {
+            "drupal/core": "-p2"
+        }
+    }
+}
