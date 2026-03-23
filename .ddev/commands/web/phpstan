@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+module="$@"
+neon_file_path="/var/www/html/web/modules/contrib/${module}/phpstan.neon"
+
+if ! [ -f "${neon_file_path}" ]; then
+  phpstan -vv analyse /var/www/html/web/modules/contrib/${module}
+else
+  phpstan -vv analyse /var/www/html/web/modules/contrib/${module} -c ${neon_file_path}
+fi
