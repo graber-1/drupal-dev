@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+phpcs -s --standard=web/modules/contrib/"$@"/phpcs.xml web/modules/contrib/"$@"/
