@@ -3,4 +3,4 @@
 cd /var/www/html/web
 rm -rf sites/simpletest/[0-9]*
 rm sites/simpletest/browser_output/*
-phpunit -c ../phpunit.xml ./modules/contrib/"$@"
+phpunit --display-skipped -c ../phpunit.xml ./modules/contrib/"$@"

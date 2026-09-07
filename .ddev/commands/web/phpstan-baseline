@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+rm /var/www/html/web/modules/contrib/"$@"/phpstan-baseline.neon
+touch /var/www/html/web/modules/contrib/"$@"/phpstan-baseline.neon
+phpstan analyse /var/www/html/web/modules/contrib/"$@" -c /var/www/html/web/modules/contrib/"$@"/phpstan.neon --generate-baseline /var/www/html/web/modules/contrib/"$@"/phpstan-baseline.neon

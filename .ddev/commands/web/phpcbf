@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+phpcbf /var/www/html/web/modules/contrib/"$@"
