@@ -1,0 +1,73 @@
+uuid: e9775987-4afa-4d05-abf3-2206eb808dda
+langcode: en
+status: true
+dependencies:
+  config:
+    - cv_blocks.component_variant_preset.test_2
+    - cv_blocks.component_variant_preset.title
+    - field.field.node.page.field_body
+    - field.field.node.page.field_some_link
+    - node.type.page
+  module:
+    - cv_blocks
+    - layout_builder
+    - layout_discovery
+    - user
+third_party_settings:
+  layout_builder:
+    enabled: true
+    allow_custom: false
+    sections:
+      -
+        layout_id: layout_onecol
+        layout_settings:
+          label: ''
+        components:
+          4a491ef4-f483-4adb-9e19-4bbede866a8b:
+            uuid: 4a491ef4-f483-4adb-9e19-4bbede866a8b
+            region: content
+            configuration:
+              id: 'cv_component:title'
+              label: Test
+              label_display: visible
+              provider: cv_blocks
+              context_mapping:
+                entity: layout_builder.entity
+              variant: ''
+              prop_overrides:
+                title:
+                  formatter_type: string
+                  formatter_settings:
+                    link_to_entity: true
+                    link_rel: canonical
+            weight: 0
+            additional: {  }
+          1b2ddaf3-9e60-43ac-ab18-347b41f49f96:
+            uuid: 1b2ddaf3-9e60-43ac-ab18-347b41f49f96
+            region: content
+            configuration:
+              id: 'cv_component:test_2'
+              label: 'Test 2'
+              label_display: visible
+              provider: cv_blocks
+              context_mapping:
+                entity: layout_builder.entity
+              variant: ''
+              prop_overrides:
+                arg:
+                  formatter_type: string
+                  formatter_settings:
+                    link_to_entity: true
+                    link_rel: canonical
+            weight: 1
+            additional: {  }
+        third_party_settings: {  }
+id: node.page.default
+targetEntityType: node
+bundle: page
+mode: default
+content: {  }
+hidden:
+  field_body: true
+  field_some_link: true
+  links: true

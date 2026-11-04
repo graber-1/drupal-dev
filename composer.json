@@ -10,18 +10,30 @@
     },
     "repositories": [
         {
+            "type": "vcs",
+            "url": "https://git.drupalcode.org/issue/marketo_ma-3576016.git"
+        },
+        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         }
     ],
     "require": {
+        "ext-json": "*",
         "composer/installers": "^2.2",
         "cweagans/composer-patches": "^1.7",
         "drupal/admin_toolbar": "^3.4",
         "drupal/codemirror_editor": "^2.0",
+        "drupal/coder": "^8.3",
+        "drupal/contact_block": "^2.0",
+        "drupal/contact_storage": "^1.0",
         "drupal/core": "^11",
         "drupal/core-composer-scaffold": "^11",
-        "drush/drush": "^13.7"
+        "drupal/key": "^1.0",
+        "drupal/openid_connect": "3.x-dev@dev",
+        "drupal/views_bulk_operations": "^4.4",
+        "drush/drush": "^13.7",
+        "firebase/php-jwt": "^7.0"
     },
     "require-dev": {
         "chi-teck/drupal-coder-extension": "^1.2",
@@ -29,10 +41,13 @@
         "drupal/core-dev": "^11",
         "drupal/devel": "^5.5",
         "drupal/developer_console": "^1.0@dev",
-        "ergebnis/phpstan-rules": "^2.0",
+        "drupal/openid_connect_windows_aad": "^2.0@beta",
+        "drupal/workspace_config": "1.0.x-dev@dev",
+        "mglaman/phpstan-drupal": "^2.0",
         "phpspec/prophecy-phpunit": "^2.0",
-        "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/phpstan-strict-rules": "^1.2",
+        "phpstan/phpstan": "^2.1.26",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
         "phpunit/phpunit": "^9 || ^10.5 || ^11"
     },
     "conflict": {
@@ -44,22 +59,19 @@
         "sort-packages": true,
         "allow-plugins": {
             "composer/installers": true,
-            "drupal/core-composer-scaffold": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "phpstan/extension-installer": true,
             "cweagans/composer-patches": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "drupal/core-composer-scaffold": true,
             "php-http/discovery": true,
+            "phpstan/extension-installer": true,
+            "symfony/runtime": true,
             "tbachert/spi": true
         }
     },
     "scripts": {
         "si": "drush site:install -v minimal --existing-config --yes --sites-subdir=default",
         "sid": "drush site:install -v minimal --existing-config --yes --sites-subdir=default && drush lms-ctt --simple-passwords && drush en -y developer_console && drush uli",
-        "test-environment": "drush si minimal --yes && drush thin claro && drush cset system.theme default claro -y && drush pm:install dblog block page_cache dynamic_page_cache lms lms_answer_plugins lms_answer_comments -y && drush lms-ctt --simple-passwords",
-        "phpcs": "phpcs -s --standard='web/modules/contrib/@additional_args/phpcs.xml' web/modules/contrib/@additional_args/",
-        "phpcbf": "phpcbf /var/www/html/web/modules/contrib/@additional_args",
-        "phpstan": "phpstan -vv analyse /var/www/html/web/modules/contrib/@additional_args -c /var/www/html/web/modules/contrib/@additional_args/phpstan.neon",
-        "phpstan-baseline": "rm /var/www/html/web/modules/contrib/@additional_args/phpstan-baseline.neon; touch /var/www/html/web/modules/contrib/@additional_args/phpstan-baseline.neon; phpstan analyse /var/www/html/web/modules/contrib/@additional_args -c /var/www/html/web/modules/contrib/@additional_args/phpstan.neon --generate-baseline /var/www/html/web/modules/contrib/@additional_args/phpstan-baseline.neon"
+        "test-environment": "drush si minimal --yes && drush thin claro && drush cset system.theme default claro -y && drush pm:install dblog block page_cache dynamic_page_cache lms lms_answer_plugins lms_answer_comments -y && drush lms-ctt --simple-passwords"
     },
     "extra": {
         "drupal-scaffold": {

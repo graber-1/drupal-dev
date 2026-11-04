@@ -1,0 +1,16 @@
+uuid: 50c4925b-c0dd-4d51-994a-66cde0ec701e
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: xDkYf7c94f7XpSjRfslCOMz4IWvG_j-HdVFVuGfgVA0
+id: js_test_config
+name: 'JS Test Component config variant'
+base: 'component_variants_example:js_test'
+template: |
+  <div{{ attributes }}>
+    <h2>JS Test Component config variant</h2>
+    <h3 class="js-test-config-title">{{ title }}</h3>
+    <div class="js-test-config-content">{{ content }}</div>
+  </div>
+provider: component_variants

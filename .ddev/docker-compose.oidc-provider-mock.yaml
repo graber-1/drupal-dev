@@ -1,0 +1,33 @@
+#ddev-generated
+services:
+  oidc-provider-mock:
+    container_name: ddev-${DDEV_SITENAME}-oidc-provider-mock
+    profiles:
+      - oidc-provider-mock
+    image: ${OIDC_PROVIDER_MOCK_DOCKER_IMAGE:-ghcr.io/geigerzaehler/oidc-provider-mock:latest}
+    restart: "no"
+    entrypoint: []
+    command: >
+      oidc-provider-mock
+      --host 0.0.0.0
+      --port 9400
+      --user-claims-file /mnt/ddev_config/oidc-provider-mock/users.yaml
+      ${OIDC_PROVIDER_MOCK_EXTRA_ARGS:-}
+    env_file:
+      - .env.oidc-provider-mock
+    environment:
+      - VIRTUAL_HOST=${OIDC_PRIMARY_HOST:-oidc.${DDEV_SITENAME}.${DDEV_TLD:-ddev.site}}
+      - HTTP_EXPOSE=80
+      - HTTPS_EXPOSE=443:9400
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    volumes:
+      - ".:/mnt/ddev_config:ro"
+      - "ddev-global-cache:/mnt/ddev-global-cache"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:9400/.well-known/openid-configuration')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s

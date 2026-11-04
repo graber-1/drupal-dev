@@ -1,0 +1,22 @@
+uuid: 4a8990a9-210c-41f7-bc22-e11bee5d557e
+langcode: en
+status: true
+dependencies:
+  module:
+    - component_variants_example
+    - node
+id: test_2
+label: 'Test 2'
+component_id: 'component_variants_example:test_child_component'
+entity_type_id: node
+variant: null
+variant_allow_override: false
+field_mappings:
+  arg:
+    target: prop
+    field_name: title
+    formatter_type: string
+    formatter_settings:
+      link_to_entity: false
+      link_rel: canonical
+    allow_override: true

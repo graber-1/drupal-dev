@@ -1,0 +1,39 @@
+#ddev-generated
+hooks:
+  pre-start:
+    - exec-host: |
+        if [ ! -f .ddev/oidc-provider-mock/users.yaml ] && [ -f .ddev/oidc-provider-mock/defaults/users.yaml ]; then
+          mkdir -p .ddev/oidc-provider-mock
+          cp .ddev/oidc-provider-mock/defaults/users.yaml .ddev/oidc-provider-mock/users.yaml
+          sed -i.bak 's/#ddev-generated//g' .ddev/oidc-provider-mock/users.yaml && rm -f .ddev/oidc-provider-mock/users.yaml.bak
+        fi
+
+        if [ -n "${DDEV_PRIMARY_URL:-}" ]; then
+          PRIMARY_HOST="${DDEV_PRIMARY_URL#*://}"
+          PRIMARY_HOST="${PRIMARY_HOST%%:*}"
+          PRIMARY_HOST="${PRIMARY_HOST%%/*}"
+        else
+          PRIMARY_HOST="${DDEV_SITENAME}.${DDEV_TLD:-ddev.site}"
+        fi
+
+        OIDC_PRIMARY_HOST="oidc.${PRIMARY_HOST}"
+        OIDC_ISSUER_URL="https://${OIDC_PRIMARY_HOST}"
+
+        update_env_var() {
+          local file="$1"
+          local key="$2"
+          local val="$3"
+
+          touch "$file"
+          if grep -q "^${key}=" "$file"; then
+            sed -i.bak "s|^${key}=.*|${key}=${val}|" "$file" && rm -f "${file}.bak"
+          else
+            echo "${key}=${val}" >> "$file"
+          fi
+        }
+
+        update_env_var .ddev/.env.oidc-provider-mock OIDC_PRIMARY_HOST "${OIDC_PRIMARY_HOST}"
+        update_env_var .ddev/.env.oidc-provider-mock OIDC_ISSUER_URL "${OIDC_ISSUER_URL}"
+
+        update_env_var .ddev/.env.web OIDC_PRIMARY_HOST "${OIDC_PRIMARY_HOST}"
+        update_env_var .ddev/.env.web OIDC_ISSUER_URL "${OIDC_ISSUER_URL}"

@@ -1,0 +1,26 @@
+
+- sub: admin
+  email: admin@example.com
+  name: Admin User
+  given_name: Admin
+  family_name: User
+  preferred_username: admin
+  roles:
+    - administrator
+
+- sub: alice
+  email: alice@example.com
+  name: Alice Smith
+  given_name: Alice
+  family_name: Smith
+  preferred_username: alice
+  roles:
+    - editor
+
+- sub: bob
+  email: bob@example.com
+  name: Bob Jones
+  given_name: Bob
+  family_name: Jones
+  preferred_username: bob
+  roles: []

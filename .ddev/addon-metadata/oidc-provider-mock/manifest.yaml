@@ -1,0 +1,12 @@
+name: oidc-provider-mock
+repository: Pronovix/ddev-oidc-provider-mock
+version: 1.0.0-alpha2
+install_date: "2026-10-26T12:08:15+01:00"
+project_files:
+    - docker-compose.oidc-provider-mock.yaml
+    - config.oidc-provider-mock.yaml
+    - oidc-provider-mock/defaults/users.yaml
+    - oidc-provider-mock/defaults/.gitignore
+    - oidc-provider-mock/.gitignore
+global_files: []
+removal_actions: []

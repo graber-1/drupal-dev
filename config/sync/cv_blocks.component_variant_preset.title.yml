@@ -1,0 +1,54 @@
+uuid: 06ffeb7b-488c-4f88-90fa-05c234a386a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - component_variants.component_variant.cv_blocks_test_component_featured
+    - field.storage.node.field_body
+  module:
+    - component_variants_example
+    - node
+id: title
+label: Test
+component_id: 'component_variants_example:cv_blocks_test_component'
+entity_type_id: node
+variant: cv_blocks_test_component_featured
+variant_allow_override: false
+field_mappings:
+  title:
+    target: prop
+    field_name: title
+    formatter_type: string
+    formatter_settings:
+      link_to_entity: false
+      link_rel: canonical
+    allow_override: true
+  subtitle:
+    target: prop
+    value: Subtitle
+    allow_override: false
+  badge:
+    target: prop
+    field_name: created
+    formatter_type: timestamp
+    formatter_settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+      tooltip:
+        date_format: long
+        custom_date_format: ''
+      time_diff:
+        enabled: false
+        future_format: '@interval hence'
+        past_format: '@interval ago'
+        granularity: 2
+        refresh: 60
+        description: ''
+    allow_override: false
+  content:
+    target: slot
+    field_name: field_body
+    formatter_type: text_default
+    formatter_settings: {  }
+    allow_override: false

@@ -1,3 +1,83 @@
 #!/usr/bin/env bash
 
-phpstan -vv analyse /var/www/html/web/modules/contrib/"$@" -c /var/www/html/web/modules/contrib/"$@"/phpstan.neon
+## Description: Run PHPStan against a contrib or custom module
+## Usage: phpstan <module>
+## Example: "ddev phpstan openid_connect"
+
+set -e
+
+MODULE="$1"
+if [ -z "$MODULE" ]; then
+  echo "Usage: ddev phpstan <module>" >&2
+  exit 1
+fi
+
+cd /var/www/html
+
+if [ -d "web/modules/contrib/$MODULE" ]; then
+  MODULE_DIR="web/modules/contrib/$MODULE"
+elif [ -d "web/modules/custom/$MODULE" ]; then
+  MODULE_DIR="web/modules/custom/$MODULE"
+else
+  echo "Module '$MODULE' not found in web/modules/contrib or web/modules/custom." >&2
+  exit 1
+fi
+
+# Same lookup order as PHPStan itself and the drupal.org GitLab CI.
+CONFIG=""
+for name in phpstan.neon phpstan.neon.dist phpstan.dist.neon; do
+  if [ -f "$MODULE_DIR/$name" ]; then
+    CONFIG="$MODULE_DIR/$name"
+    break
+  fi
+done
+
+if [ -z "$CONFIG" ]; then
+  # No module config: use the drupal.org GitLab CI default
+  # (gitlab_templates assets/phpstan.neon).
+  echo "No PHPStan config in $MODULE_DIR, using the drupal.org GitLab CI default."
+  CONFIG=$(mktemp --suffix=.neon)
+  trap 'rm -f "$CONFIG"' EXIT
+  {
+    if [ -f "$MODULE_DIR/phpstan-baseline.neon" ]; then
+      echo "includes:"
+      echo "  - /var/www/html/$MODULE_DIR/phpstan-baseline.neon"
+    fi
+    cat <<'NEON'
+parameters:
+  level: 0
+  fileExtensions:
+    - php
+    - module
+    - inc
+    - install
+    - theme
+    - profile
+  reportUnmatchedIgnoredErrors: false
+  ignoreErrors:
+    - "#^Unsafe usage of new static#"
+NEON
+    # phpstan-strict-rules is auto-loaded here, but not in CI: reset its
+    # parameters to the PHPStan defaults.
+    if [ -d vendor/phpstan/phpstan-strict-rules ]; then
+      cat <<'NEON'
+  strictRules:
+    allRules: false
+  polluteScopeWithLoopInitialAssignments: true
+  polluteScopeWithAlwaysIterableForeach: true
+  polluteScopeWithBlock: true
+  checkDynamicProperties: false
+  checkExplicitMixedMissingReturn: false
+  checkFunctionNameCase: false
+  checkInternalClassCaseSensitivity: false
+  reportMaybesInMethodSignatures: false
+  reportStaticMethodSignatures: false
+  reportMaybesInPropertyPhpDocTypes: false
+  reportWrongPhpDocTypeInVarTag: false
+  checkStrictPrintfPlaceholderTypes: false
+NEON
+    fi
+  } > "$CONFIG"
+fi
+
+phpstan -vv analyse "$MODULE_DIR" -c "$CONFIG"

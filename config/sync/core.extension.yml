@@ -4,15 +4,30 @@ module:
   admin_toolbar: 0
   block: 0
   breakpoint: 0
+  codemirror_editor: 0
+  component_variants: 0
+  component_variants_example: 0
+  contextual: 0
+  cv_blocks: 0
   dblog: 0
+  developer_console: 0
   dynamic_page_cache: 0
+  editor: 0
   field: 0
+  field_ui: 0
+  file: 0
   filter: 0
+  js_cookie: 0
+  layout_builder: 0
+  layout_discovery: 0
+  link: 0
+  link_allowed_hosts: 0
   mysql: 0
   node: 0
   page_cache: 0
   path_alias: 0
   system: 0
+  tailwindcss_utility: 0
   text: 0
   toolbar: 0
   update: 0
